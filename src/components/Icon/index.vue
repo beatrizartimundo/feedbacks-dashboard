@@ -3,9 +3,10 @@
 </template>
 <script>
 import Loading from './Loading'
+import Copy from './Copy'
 
 export default {
-  components: { Loading },
+  components: { Loading, Copy },
   props: {
     name: { type: String, required: true }
   }

@@ -37,6 +37,7 @@ export default {
     }
   },
   setup (props) {
+    // calculo para tamanho dos icones
     const computedWidth = computed(() => {
       const value = Math.random() * (props.width - props.minWidth)
       return props.width ?? `${Math.floor(value + props.minWidth)}%`
@@ -65,7 +66,7 @@ export default {
   bottom: 0;
   left: 0;
   transform: translateX(-100%);
-  background-image: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-image: linear-gradient(to right, #eee 8%, #ddd 18%, #eeeeee 33%);
   background-position: 0 0;
   background-size: 1000 100;
   animation: shimmer infinite alternate ease-in-out;

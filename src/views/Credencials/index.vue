@@ -3,7 +3,7 @@
     <header-logged />
   </div>
 
-  <div class="flex flex-col items-center justify-center h-64 bg-brand-gray">
+  <div class="flex flex-col items-center justify-center h-64 bg-brand-darkgray">
     <h1 class="text-4xl font-black text-center text-gray-800">
       Credenciais
     </h1>
@@ -32,7 +32,9 @@
         class="flex py-3 pl-5 mt-2 rounded justify-between items-center bg-brand-gray w-full lg:w-1/2"
       >
         <span v-if="state.hasError">Erro ao carregar a apikey</span>
+
         <span v-else id="apikey">{{ store.User.currentUser.apiKey }}</span>
+<!-- se tiver erro para apikey não carrega o script tambem  -->
         <div class="flex ml-20 mr-5" v-if="!state.hasError">
           <icon
             @click="handleCopy"
@@ -68,14 +70,11 @@
       >
         <span v-if="state.hasError">Erro ao carregar o script</span>
         <pre v-else>
-        //revisar essa parte
 &lt;script
-  defer
-  async
-  onload="init('{{store.User.currentUser.apiKey}}')"
-  src="https://beatrizartimundo-feedbacker-widget.netlify.app/init.js"
+src="https://beatrizartimundo-feedbacker-widget.netlify.app?api_key={{store.User.currentUser.apiKey}}"
 &gt;&lt;/script&gt;
         </pre>
+
       </div>
     </div>
   </div>
@@ -100,15 +99,18 @@ export default {
       hasError: false,
       isLoading: false
     })
+
     watch(() => store.User.currentUser, () => {
       if (!store.Global.isLoading && !store.User.currentUser.apiKey) {
         handleError(true)
       }
     })
+
     function handleError (error) {
       state.isLoading = false
       state.hasError = !!error
     }
+    // geração das keys
     async function handleGenerateApikey () {
       try {
         state.isLoading = true

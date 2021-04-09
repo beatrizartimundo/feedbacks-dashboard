@@ -2,18 +2,16 @@ import axios from 'axios'
 import router from '../router'
 import { setGlobalLoading } from '../store/global'
 import AuthService from './auth'
-import UsersServices from './users'
+import UsersService from './users'
 
 const API_ENVS = {
-  production: '',
   development: '',
   local: 'http://localhost:3000'
 }
 
 const httpClient = axios.create({
-  baseURL: API_ENVS.local
+  baseURL: API_ENVS[process.env.NODE_ENV] || API_ENVS.local
 })
-// Cria um interceptor para pegar o token e utilizar em todas as requisições deste user
 
 httpClient.interceptors.request.use(config => {
   setGlobalLoading(true)
@@ -31,14 +29,13 @@ httpClient.interceptors.response.use((response) => {
   return response
 }, (error) => {
   const canThrowAnError = error.request.status === 0 ||
-  error.request.status === 500
+    error.request.status === 500
 
   if (canThrowAnError) {
     setGlobalLoading(false)
     throw new Error(error.message)
   }
 
-  // so funciiona se o erro pra token for 401
   if (error.response.status === 401) {
     router.push({ name: 'Home' })
   }
@@ -49,5 +46,5 @@ httpClient.interceptors.response.use((response) => {
 
 export default {
   auth: AuthService(httpClient),
-  users: UsersServices(httpClient)
+  users: UsersService(httpClient)
 }

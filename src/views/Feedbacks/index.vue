@@ -5,13 +5,13 @@
 </template>
 <script>
 import HeaderLogged from '../../components/HeaderLogged'
-// import useStore from '../../hooks/useStore'
+import useStore from '../../hooks/useStore'
 
 export default {
   components: { HeaderLogged }
 
 }
-// const store = useStore('User')
-// console.log(store.currentUser.name)
+const store = useStore('User')
+console.log(store.currentUser.name)
 
 </script>

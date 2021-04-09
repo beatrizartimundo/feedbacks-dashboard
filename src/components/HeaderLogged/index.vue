@@ -30,30 +30,30 @@
 </template>
 <script>
 import { useRouter } from 'vue-router'
-// import { computed } from 'vue'
-// import useStore from '../../hooks/useStore'
-// import { cleanCurrentUser } from '../../store/user'
+import { computed } from 'vue'
+import useStore from '../../hooks/useStore'
+import { cleanCurrentUser } from '../../store/user'
 
 export default {
   setup () {
     const router = useRouter()
-    // const store = useStore('User')
+    const store = useStore('User')
     // console.log(store.currentUser.name)
-    // const logoutLabel = computed(() => {
-    //   if (!store.currentUser.name) {
-    //     return '...'
-    //   }
-    //   return `${store.currentUser.name}(sair)`
-    // })
-    // function handleLogout () {
-    //   window.localStorage.removeItem('token')
-    //   cleanCurrentUser()
-    //   router.push({ name: 'Home' })
-    // }
+    const logoutLabel = computed(() => {
+      if (!store.currentUser.name) {
+        return '...'
+      }
+      return `${store.currentUser.name}(sair)`
+    })
+    function handleLogout () {
+      window.localStorage.removeItem('token')
+      cleanCurrentUser()
+      router.push({ name: 'Home' })
+    }
     return {
-      router
-      // logoutLabel,
-      // handleLogout
+      router,
+      logoutLabel,
+      handleLogout
     }
   }
 }

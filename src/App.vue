@@ -23,12 +23,13 @@ export default {
           const token = window.localStorage.getItem('token')
           if (!token) {
             router.push({ name: 'Home' })
+
+            return
           }
-          return
+          const { data } = await services.users.getMe()
+          // console.log('data', data)
+          setCurrentUser(data)
         }
-        const { data } = await services.users.getMe()
-        console.log('data', data)
-        setCurrentUser(data)
       }
     )
   }
