@@ -4,9 +4,7 @@
   </div>
 
   <div class="flex flex-col items-center justify-center h-64 bg-brand-gray">
-    <h1 class="text-4xl font-black text-center text-gray-800">
-      Feedbacks
-    </h1>
+    <h1 class="text-4xl font-black text-center text-gray-800">Feedbacks</h1>
     <p class="text-lg text-center text-gray-800 font-regular">
       Detalhes de todos os feedbacks recebidos.
     </p>
@@ -15,9 +13,7 @@
   <div class="flex justify-center w-full pb-20">
     <div class="w-4/5 max-w-6xl py-20 grid grid-cols-4 gap-2">
       <div>
-        <h1 class="text-3xl font-black text-brand-darkgray">
-          Listagem
-        </h1>
+        <h1 class="text-3xl font-black text-brand-darkgray">Listagem</h1>
         <suspense>
           <template #default>
             <filters
@@ -40,9 +36,9 @@
         <p
           v-if="
             !state.feedbacks.length &&
-              !state.isLoading &&
-              !state.isLoadingFeedbacks &&
-              !state.isError
+            !state.isLoading &&
+            !state.isLoadingFeedbacks &&
+            !state.hasError
           "
           class="text-lg text-center text-gray-800 font-regular"
         >
@@ -70,8 +66,9 @@ import Filters from './Filters'
 import FiltersLoading from './FiltersLoading'
 import HeaderLogged from '../../components/HeaderLogged'
 import FeedbackCard from '../../components/FeedbackCard'
-import FeedbackCardLoading from '../../components/FeedbackCard/loading'
-// import services from '../../services'
+import FeedbackCardLoading from '../../components/FeedbackCard/Loading'
+import services from '../../services'
+
 // import useStore from '../../hooks/useStore'
 
 export default {
@@ -107,8 +104,77 @@ export default {
       window.removeEventListener('scroll', handleScroll, false)
     })
 
+    function handleErrors (error) {
+      state.isLoading = false
+      state.isLoadingFeedbacks = false
+      state.isLoadingMoreFeedback = false
+      state.hasError = !!error
+    }
+    // função da paginação
+    async function handleScroll () {
+      const isBottomOfWindow =
+        Math.ceil(document.documentElement.scrollTop + window.innerHeight) >=
+        document.documentElement.scrollHeight
+
+      if (state.isLoading || state.isLoadingMoreFeedback) return
+      if (!isBottomOfWindow) return
+      if (state.feedbacks.length >= state.pagination.total) return
+
+      try {
+        state.isLoadingMoreFeedback = true
+        const { data } = await services.feedbacks.getAll({
+          ...state.pagination,
+          type: state.currentFeedbackType,
+          offset: state.pagination.offset + 5
+        })
+
+        if (data.results.length) {
+          state.feedbacks.push(...data.results)
+        }
+
+        state.isLoadingMoreFeedback = false
+        state.pagination = data.pagination
+      } catch (error) {
+        state.isLoadingMoreFeedback = false
+        handleErrors(error)
+      }
+    }
+
+    async function changeFeedbacksType (type) {
+      try {
+        state.isLoadingFeedbacks = true
+        state.pagination.offset = 0
+        state.pagination.limit = 5
+        state.currentFeedbackType = type
+        const { data } = await services.feedbacks.getAll({
+          type,
+          ...state.pagination
+        })
+        state.feedbacks = data.results
+        state.pagination = data.pagination
+        state.isLoadingFeedbacks = false
+      } catch (error) {
+        handleErrors(error)
+      }
+    }
+    async function fetchFeedbacks () {
+      try {
+        state.isLoading = true
+        const { data } = await services.feedbacks.getAll({
+          ...state.pagination,
+          type: state.currentFeedbackType
+        })
+        state.feedbacks = data.results
+        state.pagination = data.pagination
+        state.isLoading = false
+      } catch (error) {
+        handleErrors(error)
+      }
+    }
+
     return {
-      state
+      state,
+      changeFeedbacksType
     }
   }
 }
