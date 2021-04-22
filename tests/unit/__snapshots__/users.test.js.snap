@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`usersService should return the apikey 1`] = `
+Object {
+  "data": Object {
+    "apiKey": "fcd5015c-10d3-4e9c-b395-ec7ed8850165",
+  },
+}
+`;
+
+exports[`usersService should return the user logged 1`] = `
+Object {
+  "data": Object {
+    "apiKey": "fcd5015c-10d3-4e9c-b395-ec7ed8850165",
+    "createdAt": 1599264000000,
+    "email": "igor@igor.me",
+    "id": "eab759f8-f238-4ff9-ae91-ee1558982329",
+    "name": "Igor Halfeld",
+  },
+}
+`;
