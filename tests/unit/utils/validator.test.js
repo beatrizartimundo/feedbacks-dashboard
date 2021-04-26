@@ -1,7 +1,7 @@
 import {
   validateEmptyAndEmail,
   validateEmptyAndLength3
-} from '../../src/utils/validators'
+} from '../../../src/utils/validators'
 
 describe('Validator utils', () => {
   it('should give an error with empty payload', () => {
