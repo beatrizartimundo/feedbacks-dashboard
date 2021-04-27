@@ -14,6 +14,7 @@
         <span class="text-lg font-medium text-gray-800">E-mail</span>
         <!--coloca a borda transparente assim não sobrepoe quando precisa mostrar msg de erro -->
         <input
+          id="email-field"
           v-model="state.email.value"
           type="email"
           :class="{ 'border-brand-danger': !!state.email.errorMessage }"
@@ -21,6 +22,7 @@
           placeholder="jane.dae@gmail.com"
         />
         <span
+        id="email-error"
           v-if="!!state.email.errorMessage"
           class="block font-medium text-brand-danger"
         >
@@ -32,12 +34,14 @@
         <span class="text-lg font-medium text-gray-800">Senha</span>
         <!--coloca a borda transparente assim não sobrepoe quando precisa mostrar msg de erro -->
         <input
+          id="password-field"
           v-model="state.password.value"
           type="password"
           :class="{ 'border-brand-danger': !!state.password.errorMessage }"
           class="block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded"
         />
         <span
+        id="passw-error"
           v-if="!!state.password.errorMessage"
           class="block font-medium text-brand-danger"
         >
@@ -45,6 +49,7 @@
         </span>
       </label>
       <button
+          id="submitBtn"
         :disabled="state.isLoading"
         type="submit"
         :class="{

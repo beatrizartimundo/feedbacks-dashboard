@@ -6,12 +6,14 @@
     <div class="flex">
       <ul class="flex list-none">
         <li
+          id="credencialsBtn"
           @click="() => router.push({ name: 'Credencials' })"
           class="px-6 py-2 mr-2 font-bold text-white rounded-full cursor-pointer focus:outline-none"
         >
           Credenciais
         </li>
         <li
+          id="feedbacksBtn"
           @click="() => router.push({ name: 'Feedbacks' })"
           class="px-6 py-2 mr-2 font-bold text-white rounded-full cursor-pointer focus:outline-none"
         >

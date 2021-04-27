@@ -7,8 +7,10 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint",
-    "jest": "jest --watch"
+    "cy:open":"cypress open",
+    "cy:chrome":"cypress run --headless --browser chrome",
+    "lint": "vue-cli-service lint"
+    
   },
   "dependencies": {
     "animate.css": "^4.1.1",
