@@ -1,9 +1,9 @@
 /// <reference types="cypress"/>
-// const APP_URL = process.env.APP_URL || 'http://localhost:8080'
+const APP_URL = process.env.APP_URL || 'http://localhost:8080'
 
 describe('Home', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit(APP_URL)
   })
 
   it('should render create account modal when click on cta create accoun button', () => {

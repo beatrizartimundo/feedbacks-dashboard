@@ -1,9 +1,9 @@
 /// <reference types="cypress"/>
-// const APP_URL = process.env.APP_URL || 'http://localhost:8080'
+const APP_URL = process.env.APP_URL || 'http://localhost:8080'
 
 describe('Credencials', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit(APP_URL)
   })
 
   it('should generate an api_key', () => {
