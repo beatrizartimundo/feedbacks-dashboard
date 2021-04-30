@@ -34,14 +34,8 @@
           Aconteceu um erro ao carregar os feedbacks 🥺
         </p>
         <p
-          v-if="
-            !state.feedbacks.length &&
-            !state.isLoading &&
-            !state.isLoadingFeedbacks &&
-            !state.hasError
-          "
-          class="text-lg text-center text-gray-800 font-regular"
-        >
+          v-if="!state.feedbacks.length && !state.isLoading && !state.isLoadingFeedbacks && !state.hasError"
+          class="text-lg text-center text-gray-800 font-regular">
           Ainda nenhum feedback recebido 🤓
         </p>
         <feedback-card-loading
